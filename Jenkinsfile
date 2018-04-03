@@ -14,7 +14,7 @@ pipeline {
         }
         stage('TEST') {
             steps {
-                sh "echo $JENKINS_VERSION"
+                echo "$JENKINS_VERSION"
             }
         }
         stage('DEPLOY') {
