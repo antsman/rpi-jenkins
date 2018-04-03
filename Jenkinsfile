@@ -8,9 +8,9 @@ pipeline {
     stages {
         stage('BUILD') {
             steps {
-                sh "./get-jenkins.sh"
+                sh './get-jenkins.sh'
                 sh 'ls -la'
-                echo '$JENKINS_VERSION'
+                sh 'env'
             }
         }
         stage('TEST') {
