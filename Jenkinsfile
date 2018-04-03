@@ -10,12 +10,12 @@ pipeline {
             steps {
                 sh "./get-jenkins.sh"
                 sh 'ls -la'
-                echo "$JENKINS_VERSION"
+                echo '$JENKINS_VERSION'
             }
         }
         stage('TEST') {
             steps {
-                echo "$JENKINS_VERSION"
+                echo 'env'
             }
         }
         stage('DEPLOY') {
