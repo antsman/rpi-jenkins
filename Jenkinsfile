@@ -10,6 +10,7 @@ pipeline {
             steps {
                 sh "./get-jenkins.sh"
                 sh 'ls -la'
+                echo "$JENKINS_VERSION"
             }
         }
         stage('TEST') {
