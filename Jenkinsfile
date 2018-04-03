@@ -9,6 +9,7 @@ pipeline {
         stage('BUILD') {
             steps {
                 sh "./get-jenkins.sh"
+                sh 'ls -la'
             }
         }
         stage('TEST') {
