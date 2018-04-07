@@ -13,6 +13,11 @@ pipeline {
                 echo "JENKINS_VERSION=$JENKINS_VERSION"
             }
         }
+        stage('BUILD') {
+            steps {
+                sh "docker build -t $IMAGE_NAME:$IMAGE_TAG ."
+            }
+        }
         stage('TEST') {
             steps {
                 echo "JENKINS_VERSION=$JENKINS_VERSION"
