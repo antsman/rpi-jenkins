@@ -6,16 +6,11 @@ pipeline {
         IMAGE_TAG = 'jenkins-build'
     }
     stages {
-        stage('BUILD') {
+        stage('GET WAR') {
             steps {
                 sh './get-jenkins.sh'   // Get also Jenkins-Version from META-INF/MANIFEST.MF in jenkins.war
-                sh 'cat ./env.properties'
                 load './env.properties'
                 echo "JENKINS_VERSION=$JENKINS_VERSION"
-/*
-                sh 'ls -la'
-                sh 'env'
-*/
             }
         }
         stage('TEST') {
@@ -31,8 +26,10 @@ pipeline {
                 echo 'Build succeeded, push image ..'
 /*
                 sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:latest"
+                sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:$JENKINS_VERSION"
                 sh "docker login -u $DOCKER_CREDS_USR -p $DOCKER_CREDS_PSW"
                 sh "docker push $IMAGE_NAME:latest"
+                sh "docker push $IMAGE_NAME:$JENKINS_VERSION"
 */
             }
         }
