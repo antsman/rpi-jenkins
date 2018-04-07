@@ -11,14 +11,15 @@ pipeline {
                 sh './get-jenkins.sh'   // Get also Jenkins-Version from META-INF/MANIFEST.MF in jenkins.war
                 load "$WORKSPACE/env.properties"
                 echo "JENKINS_VERSION=$JENKINS_VERSION"
+/*
                 sh 'ls -la'
                 sh 'env'
+*/
             }
         }
         stage('TEST') {
             steps {
-                echo "$JENKINS_VERSION"
-                sh 'env'
+                echo "JENKINS_VERSION=$JENKINS_VERSION"
             }
         }
         stage('DEPLOY') {
