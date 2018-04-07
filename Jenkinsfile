@@ -8,14 +8,11 @@ pipeline {
     stages {
         stage('BUILD') {
             steps {
-                sh './get-jenkins.sh'
+                sh './get-jenkins.sh'   // Get also Jenkins-Version from META-INF/MANIFEST.MF in jenkins.war
+                load "$WORKSPACE/env.properties"
+                echo "JENKINS_VERSION=$JENKINS_VERSION"
                 sh 'ls -la'
                 sh 'env'
-                script {
-                    load "$WORKSPACE/env.properties"
-                    echo "$JENKINS_VERSION"
-                    sh 'env'
-                }
             }
         }
         stage('TEST') {
