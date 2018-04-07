@@ -1,4 +1,5 @@
 node {
+    checkout scm
     sh './get-jenkins.sh'
     sh 'ls -la'
     sh 'env'
