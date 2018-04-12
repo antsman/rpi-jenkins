@@ -24,7 +24,7 @@ pipeline {
         stage('TEST') {
             steps {
                 sh "docker run -d --rm --name $CONTAINER_NAME $IMAGE_NAME:$IMAGE_TAG"
-                sh "docker exec -t --user root $CONTAINER_NAME sh -c 'apt-get update && apt-get -qq -y install wget'"
+                sh "docker exec -t --user root $CONTAINER_NAME sh -c 'apt-get -qq update && apt-get -qq -y install wget'"
                 sleep 3600
                 sh "docker exec -t $CONTAINER_NAME wget --spider http://localhost:8080"
 //              sh "docker logs $CONTAINER_NAME"
