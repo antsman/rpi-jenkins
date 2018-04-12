@@ -27,7 +27,7 @@ pipeline {
                 sh "docker exec -t --user root $CONTAINER_NAME sh -c 'apt-get -qq update && apt-get -qq -y install wget'"
                 sh 'date'
                 sleep 3600
-                sh "docker exec -t $CONTAINER_NAME wget --spider http://localhost:8080 | grep conneted"
+                sh "docker exec -t $CONTAINER_NAME wget --spider http://localhost:8080 | grep -e connected -e Forbidden"
                 sh "time docker stop $CONTAINER_NAME"
             }
         }
@@ -39,11 +39,9 @@ pipeline {
                 echo 'Build succeeded, push image ..'
                 sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:latest"
                 sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:$JENKINS_VERSION"
-/*
                 sh "docker login -u $DOCKER_CREDS_USR -p $DOCKER_CREDS_PSW"
                 sh "docker push $IMAGE_NAME:latest"
                 sh "docker push $IMAGE_NAME:$JENKINS_VERSION"
-*/
             }
         }
     }
