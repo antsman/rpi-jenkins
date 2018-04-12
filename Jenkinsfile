@@ -25,8 +25,8 @@ pipeline {
             steps {
                 timeout(time: 15, unit: 'MINUTES') {
                     sh "docker run -d --rm --name $CONTAINER_NAME $IMAGE_NAME:$IMAGE_TAG"
-                    sleep 60
-                    sh "docker exec -t --user root $CONTAINER_NAME sh -c 'apt-get update && apt-get install -y wget'"
+                    sh "docker exec -t --user root $CONTAINER_NAME sh -c 'apt-get update && apt-get -q -y install wget'"
+                    sleep 600
                     sh "docker exec -t $CONTAINER_NAME wget --spider http://localhost:8080"
 //                  sh "docker logs $CONTAINER_NAME"
                     sh "time docker stop $CONTAINER_NAME"
