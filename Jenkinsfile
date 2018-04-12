@@ -25,7 +25,7 @@ pipeline {
             steps {
                 sh "docker run -d --rm --name $CONTAINER_NAME $IMAGE_NAME:$IMAGE_TAG"
                 sh "docker exec -t --user root $CONTAINER_NAME sh -c 'apt-get -qq update && apt-get -qq -y install wget'"
-                sh 'sleep 3600'
+                sleep 3600
                 sh 'date'
                 sh "docker exec -t $CONTAINER_NAME wget --connect-timeout=3600 --timeout=3600 --spider http://localhost:8080"
                 sh "time docker stop $CONTAINER_NAME"
