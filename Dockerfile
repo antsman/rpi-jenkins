@@ -20,7 +20,7 @@ RUN mkdir -p $DATA && \
 
 # wget http://mirrors.jenkins-ci.org/war-stable/latest/jenkins.war
 COPY jenkins.war $HOME
-COPY entry.sh /usr/bin
+COPY entrypoint.sh /
 
 # Jenkins web interface, connected slave agents
 EXPOSE 8080 $JENKINS_SLAVE_AGENT_PORT
@@ -31,5 +31,5 @@ WORKDIR $DATA
 USER $USER
 
 # exec java -jar $HOME/jenkins.war --prefix=$PREFIX
-ENTRYPOINT [ "/usr/bin/entry.sh" ]
+ENTRYPOINT [ "/entrypoint.sh" ]
 
