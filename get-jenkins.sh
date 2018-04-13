@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # get Jenkins
-wget -nc -nv http://mirrors.jenkins-ci.org/war-stable/latest/jenkins.war
+wget -N -nv http://mirrors.jenkins-ci.org/war-stable/latest/jenkins.war
 
 # get Jenkins version
 JENKINS_VERSION=$(unzip -p jenkins.war META-INF/MANIFEST.MF | grep Jenkins-Version | awk '{printf $2}'| tr -d '\r')

@@ -9,12 +9,6 @@ ENV HOME /usr/src/$USER
 ENV JENKINS_HOME $DATA
 ENV JENKINS_SLAVE_AGENT_PORT 50000
 
-#RUN apt-get update && \
-#    apt-get upgrade && \
-#    apt-get install wget && \
-#    rm -rf /var/lib/apt/lists/* && \
-#    \
-
 # Prepare data and app folder
 RUN mkdir -p $DATA && \
     mkdir -p $HOME && \
@@ -26,6 +20,7 @@ RUN mkdir -p $DATA && \
 
 # wget http://mirrors.jenkins-ci.org/war-stable/latest/jenkins.war
 COPY jenkins.war $HOME
+COPY entry.sh /usr/bin
 
 # Jenkins web interface, connected slave agents
 EXPOSE 8080 $JENKINS_SLAVE_AGENT_PORT
@@ -35,4 +30,6 @@ WORKDIR $DATA
 
 USER $USER
 
-CMD java -jar $HOME/jenkins.war --prefix=$PREFIX
+# exec java -jar $HOME/jenkins.war --prefix=$PREFIX
+ENTRYPOINT [ "/usr/bin/entry.sh" ]
+
