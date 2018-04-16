@@ -25,7 +25,7 @@ pipeline {
             steps {
                 sh "docker run -d --rm --name $CONTAINER_NAME $IMAGE_NAME:$IMAGE_TAG"
                 sh "docker exec -t --user root $CONTAINER_NAME sh -c 'apt-get -qq update && apt-get -qq -y install wget'"
-                sh "JAVA_VERSION=`docker exec -t $CONTAINER_NAME java -version | grep version | awk -F\" '{ print $2 }'`"
+                sh "JAVA_VERSION=`docker exec -t $CONTAINER_NAME java -version | grep version | awk -F\" '{ print \$2 }'`"
                 echo "$JAVA_VERSION"
                 sh 'date'
                 sleep 3600
