@@ -11,7 +11,7 @@ ENV JENKINS_SLAVE_AGENT_PORT 50000
 
 # Extra runtime packages
 RUN apt-get update && \
-    apt-get install -y \
+    apt-get install -y -qq \
       git wget time procps && \
     rm -rf /var/lib/apt/lists/*
 
