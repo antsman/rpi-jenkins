@@ -29,7 +29,7 @@ RUN mkdir -p $DATA && \
     groupadd -g $DOCKER_GROUP_ID $DOCKER_GROUP_NAME && \
     usermod -aG $DOCKER_GROUP_NAME $USER
 
-# wget http://mirrors.jenkins-ci.org/war-stable/latest/jenkins.war
+# wget http://mirrors.jenkins.io/war-stable/latest/jenkins.war
 COPY jenkins.war $HOME
 COPY docker /usr/local/bin/
 COPY entrypoint.sh /
