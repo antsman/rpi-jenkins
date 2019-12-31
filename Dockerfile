@@ -2,24 +2,36 @@ FROM arm32v7/openjdk:8-jre-slim
 # COPY qemu-arm-static /usr/bin/
 
 # User, home (app) and data folders
-ENV USER jenkins
-ENV DATA /data
-ENV HOME /usr/src/$USER
+ARG USER=jenkins
+ARG DATA=/data
+ARG HOME=/usr/src/$USER
 
 ENV JENKINS_HOME $DATA
 ENV JENKINS_SLAVE_AGENT_PORT 50000
 
+# Extra runtime packages
+RUN apt-get update && \
+    apt-get install -y \
+      git wget time procps && \
+    rm -rf /var/lib/apt/lists/*
+
+ARG DOCKER_GROUP_ID=995
+ARG DOCKER_GROUP_NAME=docker
+
 # Prepare data and app folder
 RUN mkdir -p $DATA && \
     mkdir -p $HOME && \
-    \
 # Add $USER user so we aren't running as root.
     adduser --home $DATA --no-create-home -gecos '' --disabled-password $USER && \
     chown -R $USER:$USER $HOME && \
-    chown -R $USER:$USER $DATA
+    chown -R $USER:$USER $DATA && \
+# Add $USER to docker group, same guid as pi on host
+    groupadd -g $DOCKER_GROUP_ID $DOCKER_GROUP_NAME && \
+    usermod -aG $DOCKER_GROUP_NAME $USER
 
 # wget http://mirrors.jenkins-ci.org/war-stable/latest/jenkins.war
 COPY jenkins.war $HOME
+COPY docker /usr/local/bin/
 COPY entrypoint.sh /
 
 # Jenkins web interface, connected slave agents
@@ -32,4 +44,3 @@ USER $USER
 
 # exec java -jar $HOME/jenkins.war --prefix=$PREFIX
 ENTRYPOINT [ "/entrypoint.sh" ]
-
