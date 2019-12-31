@@ -4,7 +4,7 @@ FROM arm32v7/openjdk:8-jre-slim
 # User, home (app) and data folders
 ARG USER=jenkins
 ARG DATA=/data
-ARG HOME=/usr/src/$USER
+ENV HOME=/usr/src/$USER
 
 ENV JENKINS_HOME $DATA
 ENV JENKINS_SLAVE_AGENT_PORT 50000
