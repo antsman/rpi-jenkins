@@ -27,7 +27,7 @@ pipeline {
                 echo "$JENKINS_VERSION"
                 echo "$JAVA_VERSION"
                 sh 'date'
-                sleep 3600
+                sleep 120
                 sh "docker exec -t $CONTAINER_NAME wget --spider http://localhost:8080 | grep -e connected -e Forbidden"
                 sh "time docker stop $CONTAINER_NAME"
             }
