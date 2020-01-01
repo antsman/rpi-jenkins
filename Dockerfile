@@ -6,6 +6,9 @@ ARG USER=jenkins
 ARG DATA=/data
 ENV HOME=/usr/src/$USER
 
+ARG DOCKER_GROUP_ID=995
+ARG DOCKER_GROUP_NAME=docker
+
 ENV JENKINS_HOME $DATA
 ENV JENKINS_SLAVE_AGENT_PORT 50000
 
@@ -13,15 +16,11 @@ ENV JENKINS_SLAVE_AGENT_PORT 50000
 RUN apt-get update && \
     apt-get install -y -qq \
       git wget time procps && \
-    rm -rf /var/lib/apt/lists/*
-
-ARG DOCKER_GROUP_ID=995
-ARG DOCKER_GROUP_NAME=docker
-
+    rm -rf /var/lib/apt/lists/* && \
 # Prepare data and app folder
-RUN mkdir -p $DATA && \
+    mkdir -p $DATA && \
     mkdir -p $HOME && \
-# Add $USER user so we aren't running as root.
+# Add $USER user so we aren't running as root
     adduser --home $DATA --no-create-home -gecos '' --disabled-password $USER && \
     chown -R $USER:$USER $HOME && \
     chown -R $USER:$USER $DATA && \
