@@ -22,13 +22,15 @@ pipeline {
         stage('TEST') {
             steps {
                 sh "docker run -d --rm --name $CONTAINER_NAME $IMAGE_NAME:$IMAGE_TAG"
+                echo 'Sleep to allow Jenkins to start'
+                sh 'date'
+                sleep 120
                 sh "./get-versions.sh $CONTAINER_NAME"	// Get jenkins, java, docker version in started container, store in version.properties
                 load './version.properties'
                 echo "$JENKINS_VERSION"
                 echo "$JAVA_VERSION"
                 echo "$DOCKER_VERSION"
                 sh 'date'
-                sleep 120
                 sh "docker exec -t $CONTAINER_NAME wget --spider http://localhost:8080 | grep -e connected -e Forbidden"
                 sh "time docker stop $CONTAINER_NAME"
             }
