@@ -9,9 +9,9 @@ pipeline {
         CONTAINER_NAME = "$BUILD_TAG"
     }
     stages {
-        stage('GET JENKINS') {
+        stage('GET JENKINS & DOCKER') {
             steps {
-                sh './get-jenkins.sh'   // Get also Jenkins-Version from META-INF/MANIFEST.MF in jenkins.war, store in env.properties
+                sh './get-jenkins-docker.sh'
             }
         }
         stage('BUILD') {
@@ -22,29 +22,33 @@ pipeline {
         stage('TEST') {
             steps {
                 sh "docker run -d --rm --name $CONTAINER_NAME $IMAGE_NAME:$IMAGE_TAG"
-                sh "./get-java-version.sh $CONTAINER_NAME"   // Get used java version in started container, store in env.properties
-                load './env.properties'
+                sh "./get-versions.sh $CONTAINER_NAME"	// Get jenkins, java, docker version in started container, store in version.properties
+                load './version.properties'
                 echo "$JENKINS_VERSION"
                 echo "$JAVA_VERSION"
+                echo "$DOCKER_VERSION"
                 sh 'date'
                 sleep 120
                 sh "docker exec -t $CONTAINER_NAME wget --spider http://localhost:8080 | grep -e connected -e Forbidden"
                 sh "time docker stop $CONTAINER_NAME"
             }
         }
-        stage('DEPLOY') {
+        stage('PUSH') {
             when {
                 branch 'master'
             }
             steps {
-                echo 'Build succeeded, push image ..'
                 sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:latest"
                 sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:$JENKINS_VERSION"
                 sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:$JENKINS_VERSION-$JAVA_VERSION"
+                sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:$JENKINS_VERSION-$JAVA_VERSION-$DOCKER_VERSION"
+
                 sh "docker login -u $DOCKER_CREDS_USR -p $DOCKER_CREDS_PSW"
+
                 sh "docker push $IMAGE_NAME:latest"
                 sh "docker push $IMAGE_NAME:$JENKINS_VERSION"
                 sh "docker push $IMAGE_NAME:$JENKINS_VERSION-$JAVA_VERSION"
+                sh "docker push $IMAGE_NAME:$JENKINS_VERSION-$JAVA_VERSION-$DOCKER_VERSION"
             }
         }
     }
