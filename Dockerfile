@@ -6,6 +6,7 @@ ARG USER=jenkins
 ARG DATA=/data
 ENV HOME=/usr/src/$USER
 
+# Match the guid as on host
 ARG DOCKER_GROUP_ID=995
 ARG DOCKER_GROUP_NAME=docker
 
