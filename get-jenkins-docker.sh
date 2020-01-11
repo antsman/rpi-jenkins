@@ -1,10 +1,8 @@
 #!/bin/bash
 
 # get jenkins
-wget --timestamping --no-verbose http://mirrors.jenkins.io/war-stable/latest/jenkins.war
-
-# find Jenkins version
-# echo JENKINS_VERSION=\"$(unzip -p jenkins.war META-INF/MANIFEST.MF | grep Jenkins-Version | awk '{printf $2}'| tr -d '\r')\" | tee env.properties
+JENKINS_VERSION=2.204.1
+wget --timestamping --no-verbose http://mirrors.jenkins.io/war-stable/$JENKINS_VERSION/jenkins.war
 
 # get docker binaries
 DOCKER_VERSION=19.03.5
