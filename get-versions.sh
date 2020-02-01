@@ -10,4 +10,3 @@ test -n "$1" && (
     echo Give container name as parameter!
     exit 1
 )
-
