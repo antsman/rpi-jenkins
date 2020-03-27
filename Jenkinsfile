@@ -35,16 +35,19 @@ pipeline {
                 sh "time docker stop $CONTAINER_NAME"
             }
         }
-        stage('PUSH') {
-            when {
-                branch 'master'
-            }
+        stage('TAG') {
             steps {
                 sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:latest"
                 sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:$JENKINS_VERSION"
                 sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:$JENKINS_VERSION-$JAVA_VERSION"
                 sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:$JENKINS_VERSION-$JAVA_VERSION-$DOCKER_VERSION"
-
+            }
+        }
+        stage('PUSH') {
+            when {
+                branch 'master'
+            }
+            steps {
                 sh "echo $DOCKER_CREDS_PSW | docker login --username $DOCKER_CREDS_USR --password-stdin"
 
                 sh "docker push $IMAGE_NAME:latest"
