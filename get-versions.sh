@@ -1,5 +1,5 @@
 #!/bin/bash
-# Outputs versions found in specified container, saves saves same also
+# Outputs versions found in specified container, saves same also
 # in properties file for later use in Jenkinsfile
 
 VERSIONS=version.properties
