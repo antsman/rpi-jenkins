@@ -15,8 +15,11 @@ ENV JENKINS_SLAVE_AGENT_PORT 50000
 # Extra runtime packages
 RUN apt-get update && \
     apt-get install -y -qq \
-      openjdk-11-jre-headless git wget time procps && \
+      java8-runtime-headless \
+      openjdk-11-jre-headless \
+      git wget time procps && \
     rm -rf /var/lib/apt/lists/* && \
+# ca-certificates-java depends on default-jre-headless | java8-runtime-headless
 # Prepare data and app folder
     mkdir -p $DATA && \
     mkdir -p $HOME && \
