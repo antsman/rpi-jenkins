@@ -12,14 +12,15 @@ ARG DOCKER_GROUP_NAME=docker
 ENV JENKINS_HOME $DATA
 ENV JENKINS_SLAVE_AGENT_PORT 50000
 
-# Extra runtime packages
+# ca-certificates-java depends on default-jre-headless | java8-runtime-headless
 RUN apt-get update && \
     apt-get install -y -qq \
-      default-jre-headless \
+      default-jre-headless ca-certificates-java
+# Extra runtime packages
+RUN apt-get install -y -qq \
       openjdk-11-jre-headless \
       git wget time procps && \
     rm -rf /var/lib/apt/lists/* && \
-# ca-certificates-java depends on default-jre-headless | java8-runtime-headless
 # Prepare data and app folder
     mkdir -p $DATA && \
     mkdir -p $HOME && \
