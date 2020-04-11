@@ -1,5 +1,4 @@
-FROM arm32v7/openjdk:8-jre-slim
-# COPY qemu-arm-static /usr/bin/
+FROM debian:buster-slim
 
 # User, home (app) and data folders
 ARG USER=jenkins
@@ -15,7 +14,10 @@ ENV JENKINS_SLAVE_AGENT_PORT 50000
 
 # Extra runtime packages
 RUN apt-get update && \
-    apt-get install -y -qq \
+    # workaround for 'update-alternatives: error creating symbolic link'
+    mkdir /usr/share/man/man1 && \
+    apt-get install -y -qq --no-install-recommends \
+      openjdk-11-jre-headless \
       git wget time procps && \
     rm -rf /var/lib/apt/lists/* && \
 # Prepare data and app folder
