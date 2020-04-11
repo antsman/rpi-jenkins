@@ -3,14 +3,16 @@ FROM debian:buster-slim
 # User, home (app) and data folders
 ARG USER=jenkins
 ARG DATA=/data
-ENV HOME=/usr/src/$USER
+ENV HOME /usr/src/$USER
+ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-armhf
 
 # Match the guid as on host
 ARG DOCKER_GROUP_ID=995
 ARG DOCKER_GROUP_NAME=docker
 
 ENV JENKINS_HOME $DATA
-ENV JENKINS_SLAVE_AGENT_PORT 50000
+ENV JENKINS_WEB_PORT 8080
+ENV JENKINS_SLAVE_PORT 50000
 
 # Extra runtime packages
 RUN apt-get update && \
@@ -37,7 +39,7 @@ COPY docker /usr/local/bin/
 COPY entrypoint.sh /
 
 # Jenkins web interface, connected slave agents
-EXPOSE 8080 $JENKINS_SLAVE_AGENT_PORT
+EXPOSE $JENKINS_WEB_PORT $JENKINS_SLAVE_PORT
 
 # VOLUME $DATA
 WORKDIR $DATA
