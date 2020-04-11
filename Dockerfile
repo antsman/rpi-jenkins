@@ -12,12 +12,11 @@ ARG DOCKER_GROUP_NAME=docker
 ENV JENKINS_HOME $DATA
 ENV JENKINS_SLAVE_AGENT_PORT 50000
 
-# ca-certificates-java depends on default-jre-headless | java8-runtime-headless
-RUN apt-get update && \
-    apt-get install -y -qq \
-      default-jre-headless ca-certificates-java
 # Extra runtime packages
-RUN apt-get install -y -qq \
+RUN apt-get update && \
+    # update-alternatives: error: error creating symbolic link
+    mkdir /usr/share/man/man1 && \
+    apt-get install -y -qq \
       openjdk-11-jre-headless \
       git wget time procps && \
     rm -rf /var/lib/apt/lists/* && \
