@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # get jenkins
-JENKINS_VERSION=2.235.3
+JENKINS_VERSION=2.235.4
 wget --timestamping --no-verbose http://mirrors.jenkins.io/war-stable/$JENKINS_VERSION/jenkins.war
 
 # get docker binaries
