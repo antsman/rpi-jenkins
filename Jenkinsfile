@@ -51,6 +51,8 @@ pipeline {
                 sh "docker push $IMAGE_NAME:$JENKINS_VERSION"
                 sh "docker push $IMAGE_NAME:$JENKINS_VERSION-$JAVA_VERSION"
                 sh "docker push $IMAGE_NAME:$JENKINS_VERSION-$JAVA_VERSION-$DOCKER_VERSION"
+
+                sh "docker rmi \$(docker images $IMAGE_NAME -q) -f"
             }
         }
     }
