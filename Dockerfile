@@ -20,7 +20,7 @@ RUN apt-get update && \
     mkdir /usr/share/man/man1 && \
     apt-get install -y -qq --no-install-recommends \
       openjdk-11-jre-headless \
-      git wget time procps && \
+      git ssh wget time procps && \
     rm -rf /var/lib/apt/lists/* && \
 # Prepare data and app folder
     mkdir -p $DATA && \
