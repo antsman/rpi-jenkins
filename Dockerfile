@@ -19,6 +19,8 @@ RUN apt-get update && \
     # workaround for 'update-alternatives: error creating symbolic link'
     # mkdir /usr/share/man/man1 && \
     apt-get install -y -qq --no-install-recommends \
+      ca-certificates-java && \
+    apt-get install -y -qq --no-install-recommends \
       openjdk-11-jre-headless \
       git ssh wget time procps && \
     rm -rf /var/lib/apt/lists/* && \
