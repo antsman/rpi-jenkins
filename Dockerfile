@@ -4,7 +4,7 @@ FROM debian:buster-slim
 ARG USER=jenkins
 ARG DATA=/data
 ENV HOME /usr/src/$USER
-ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-armhf
+ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-arm64
 
 # Match the guid as on host
 ARG DOCKER_GROUP_ID=995
@@ -16,8 +16,8 @@ ENV JENKINS_SLAVE_PORT 50000
 
 # Extra runtime packages
 RUN apt-get update && \
-    # workaround for 'update-alternatives: error creating symbolic link'
-    mkdir /usr/share/man/man1 && \
+    apt-get install -y -qq --no-install-recommends \
+      ca-certificates-java && \
     apt-get install -y -qq --no-install-recommends \
       openjdk-11-jre-headless \
       git ssh wget time procps && \
