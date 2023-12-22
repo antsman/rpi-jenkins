@@ -5,6 +5,6 @@
 [![pulls](https://badgen.net/docker/pulls/antsman/rpi-jenkins?icon=docker&color=gray)](https://hub.docker.com/r/antsman/rpi-jenkins)
 
 Quick enough Jenkins image for Raspberry Pi / arm64
-- based on debian:buster-slim
-- adding openjdk-11-jre-headless
+- based on debian:bookworm-slim
+- adding openjdk-17-jre-headless
 - adding stable jenkins, git, docker client
