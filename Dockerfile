@@ -1,10 +1,10 @@
-FROM debian:buster-slim
+FROM debian:bookworm-slim
 
 # User, home (app) and data folders
 ARG USER=jenkins
 ARG DATA=/data
 ENV HOME /usr/src/$USER
-ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-arm64
+ENV JAVA_HOME /usr/lib/jvm/default-java
 
 # Match the guid as on host
 ARG DOCKER_GROUP_ID=995
@@ -19,7 +19,7 @@ RUN apt-get update && \
     apt-get install -y -qq --no-install-recommends \
       ca-certificates-java && \
     apt-get install -y -qq --no-install-recommends \
-      openjdk-11-jre-headless \
+      openjdk-17-jre-headless \
       git ssh wget time procps && \
     rm -rf /var/lib/apt/lists/* && \
 # Prepare data and app folder
