@@ -9,9 +9,9 @@ pipeline {
         CONTAINER_NAME = "$BUILD_TAG"
     }
     stages {
-        stage('GET JENKINS & DOCKER') {
+        stage('GET JENKINS') {
             steps {
-                sh './get-jenkins-docker.sh'
+                sh './get-jenkins.sh'
             }
         }
         stage('BUILD') {
